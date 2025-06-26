@@ -2,7 +2,9 @@ package com.alfred.alfred.service;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.beans.factory.annotation.Value;
+
+import io.github.cdimascio.dotenv.Dotenv;
+
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -12,11 +14,9 @@ import java.util.*;
 @Service
 public class alfredService {
 
-  @Value("${groq.api.url}")
-  private String apiUrl;
-
-  @Value("${groq.api.key}")
-  private String apiKey;
+  Dotenv dotenv = Dotenv.load();
+  String apiKey = dotenv.get("GROQ_API_KEY");
+  String apiUrl = dotenv.get("GROQ_API_URL");
 
   private final RestTemplate restTemplate = new RestTemplate();
   private final ObjectMapper mapper = new ObjectMapper();

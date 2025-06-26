@@ -1,0 +1,26 @@
+# Maven output
+target/
+
+# Git files
+.git
+.gitignore
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# IDE-specific
+*.iml
+.idea/
+.vscode/
+
+# Docker itself
+Dockerfile
+docker-compose.yml
+
+# Logs
+*.log
+
+# Test results
+test-output/
+surefire-reports/

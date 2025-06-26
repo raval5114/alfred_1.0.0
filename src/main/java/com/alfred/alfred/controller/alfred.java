@@ -15,7 +15,7 @@ import com.alfred.alfred.models.dto.responseBody;
 public class alfred {
     @GetMapping("/testing")
     String testing() {
-        return "Yes its working";
+        return "Yes its hariraval";
     }
 
     @PostMapping("/talk")

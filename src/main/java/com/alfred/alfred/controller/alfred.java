@@ -1,5 +1,8 @@
 package com.alfred.alfred.controller;
 
+import java.util.Map;
+
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -9,18 +12,32 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.alfred.alfred.models.dto.requestBody;
 import com.alfred.alfred.models.dto.responseBody;
+import com.alfred.alfred.service.alfredService;
 
 @RestController
 @RequestMapping("/alfred")
 public class alfred {
+    private final alfredService service;
+
+    alfred(alfredService service) {
+        this.service = service;
+    }
+
     @GetMapping("/testing")
     String testing() {
         return "Yes its hariraval";
     }
 
     @PostMapping("/talk")
-    ResponseEntity<responseBody> postAnswer(@RequestBody requestBody request) {
-        responseBody response = new responseBody("Yes its working", "Working Working");
-        return ResponseEntity.ok(response);
+    ResponseEntity<Map<String, String>> postAnswer(@RequestBody requestBody request) {
+        try {
+            String reply = service.chat(request.getMessage());
+            return ResponseEntity.ok(Map.of("reply", reply));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Map.of("error", "Failed to get response from OpenAI" + e.getMessage()));
+        }
+
     }
 }

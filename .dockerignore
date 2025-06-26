@@ -1,6 +1,7 @@
 # Maven output
 target/
-
+#env
+.env
 # Git files
 .git
 .gitignore

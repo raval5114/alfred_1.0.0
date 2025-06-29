@@ -11,15 +11,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.alfred.alfred.models.dto.requestBody;
-import com.alfred.alfred.models.dto.responseBody;
 import com.alfred.alfred.service.alfredService;
 
 @RestController
 @RequestMapping("/alfred")
-public class alfred {
+public class AlfredController {
     private final alfredService service;
 
-    alfred(alfredService service) {
+    AlfredController(alfredService service) {
         this.service = service;
     }
 

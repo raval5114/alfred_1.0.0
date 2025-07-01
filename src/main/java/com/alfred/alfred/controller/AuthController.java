@@ -34,8 +34,8 @@ public class AuthController {
             boolean isValid = authService.signIn(request.getEmail(), request.getPassword());
 
             if (isValid) {
-                TokenBody tokenBody = new TokenBody(authService.ReturnId(request.getEmail()),
-                        authService.ReturnRoles(request.getEmail()));
+                TokenBody tokenBody = new TokenBody(authService.returnId(request.getEmail()),
+                        authService.returnRoles(request.getEmail()));
                 // TokenBody(TokenBody(authService.ReturnId(request.getEmail()));
                 token = genToken.generateToken(tokenBody);
                 response.setMessage("Login successful");

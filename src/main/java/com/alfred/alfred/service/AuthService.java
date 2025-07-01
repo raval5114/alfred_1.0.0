@@ -1,11 +1,10 @@
 package com.alfred.alfred.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.alfred.alfred.models.User;
 import com.alfred.alfred.repositories.authReponsitory;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -20,39 +19,37 @@ public class AuthService {
         this.authRepository = authRepository;
     }
 
-    public String ReturnId(String email) {
-        Optional<User> user = authRepository.findByEmail(email);
-        return user.get().getId();
-    }
-
-    public List<Map<String, String>> ReturnRoles(String email) {
-        Optional<User> user = authRepository.findByEmail(email);
-        return user.get().getData();
-
-    }
-
-    public Boolean signUp(User user) {
+    public boolean signUp(User user) {
         try {
             Optional<User> existingUser = authRepository.findByEmail(user.getEmail());
             if (existingUser.isPresent()) {
-                return false; // User already exists
+                System.out.println("User already exists: " + user.getEmail());
+                return false;
             }
-
+            System.out.println("Saving user: " + user);
             authRepository.save(user);
             return true;
-        } catch (Exception ex) {
-            ex.printStackTrace(); // Log the exception for debugging
+        } catch (Exception e) {
+            System.out.println("Error saving user: " + e.getMessage());
             return false;
         }
     }
 
-    public Boolean signIn(String email, String password) {
-        try {
-            Optional<User> user = authRepository.findByEmail(email);
-            return user.map(value -> value.getPassword().equals(password)).orElse(false);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            return false;
-        }
+    public String returnId(String email) {
+        return authRepository.findByEmail(email)
+                .map(User::getId)
+                .orElse(null);
+    }
+
+    public List<Map<String, String>> returnRoles(String email) {
+        return authRepository.findByEmail(email)
+                .map(User::getData)
+                .orElse(null);
+    }
+
+    public boolean signIn(String email, String password) {
+        return authRepository.findByEmail(email)
+                .map(user -> user.getPassword().equals(password))
+                .orElse(false);
     }
 }

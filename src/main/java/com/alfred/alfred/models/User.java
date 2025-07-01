@@ -14,7 +14,7 @@ public class User {
 
     private String email;
     private String password;
-    private List<Map<String, String>> data;
+    private List<Map<String, String>> roles;
 
     // Constructors
     public User() {
@@ -23,7 +23,7 @@ public class User {
     public User(String email, String password, List<Map<String, String>> data) {
         this.email = email;
         this.password = password;
-        this.data = data;
+        this.roles = data;
     }
 
     // Getters and Setters
@@ -52,11 +52,11 @@ public class User {
     }
 
     public List<Map<String, String>> getData() {
-        return data;
+        return roles;
     }
 
     public void setData(List<Map<String, String>> data) {
-        this.data = data;
+        this.roles = data;
     }
 
     @Override
@@ -64,7 +64,7 @@ public class User {
         return "User{" +
                 "id='" + id + '\'' +
                 ", email='" + email + '\'' +
-                ", data=" + data +
+                ", data=" + roles +
                 '}';
     }
 }
